@@ -33,9 +33,8 @@ const movie = ({movie}) => {
 }
 
 export const getServerSideProps = async(context) => {
-    const key = process.env.TMDB_API_KEY;
     const res = await axios
-    .get(`https://api.themoviedb.org/3/movie/${context.params.id}?api_key=${key}`);
+    .get(`https://api.themoviedb.org/3/movie/${context.params.id}?api_key=74206488d4fb5a679b81bb45afcb8173`);
     const movie = res.data;
     return{
       props : {

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/link-passhref */
 import { SearchOutlined } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import { MovieState } from '../context/Context';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 
 const Header = ({searchBar, setSearch}) => {
     const {user, logOut} = MovieState();
+    const [bar, setBar] = useState(false);
     const router = useRouter();
   return (
     <Container>
@@ -22,7 +23,7 @@ const Header = ({searchBar, setSearch}) => {
             />
             <SearchOutlined className='search'/>
         </Search>
-        <Btn>
+        <Btn bar={bar}>
             {!user ? (
             <div>
                 <Link href="/auth/signIn">
@@ -54,6 +55,9 @@ const Header = ({searchBar, setSearch}) => {
             >Log Out
             </Button>)}
         </Btn>
+        <Bar bar={bar} onClick={() => setBar(!bar)}>
+            <Line bar={bar}></Line>
+        </Bar>
     </Container>
   )
 }
@@ -68,11 +72,15 @@ const Container = styled.div`
     gap: 2rem;
     height: 80px;
     padding: 0 3rem;
+    position: relative;
     @media(max-width : 900px){
         padding: 0 1.5rem;
     } 
 `
 const Logo = styled.div`
+@media(max-width : 500px){
+        display: none;
+    }
     h2{
         font-family: 'Lobster Two', cursive;
         font-size: 1.6rem;
@@ -94,9 +102,6 @@ const Search = styled.div`
     @media(max-width : 680px){
         padding: 0.4rem 1rem;
     }
-    @media(max-width : 500px){
-        display: none;
-    }
     input{
         border: none;
         background-color: transparent;
@@ -110,14 +115,67 @@ const Search = styled.div`
 `
 const Btn = styled.div`
     text-align: right;
+    @media(max-width : 768px){
+        position: fixed;
+        top: 70px;
+        right: 0;
+        background-color: rgb(32, 42, 42);
+        padding: 0.5rem 0;
+        overflow: hidden;
+        transition: 400ms ease-in-out;
+        height: 60px;
+        transform: ${props => props.bar ? "translateX(0)" : "translateX(100px)"};
+        transition: all 400ms ease-in-out;
+    }
     .btn{
         font-size: 0.8rem;
         width: 5.5rem;
         height: 2.2rem;
-        @media(max-width : 680px){
-            width: 5rem;
-            height: 2rem;
+        @media(max-width : 768px){
+            display: block;
             font-size: 0.7rem;
-        } 
+            height: 0;
+            margin-bottom: 0.5rem;
+            background-color: transparent;
+            box-shadow: none;
+            text-transform: capitalize;
+            :focus{
+                background-color: transparent;
+                box-shadow: none;
+            }
+        }
+    }
+`
+const Bar = styled.div`
+    display: none;
+    @media(max-width : 768px){
+        display: flex;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`
+const Line = styled.div`
+    width: 25px;
+    height: 1px;
+    position: relative;
+    background-color: ${props => props.bar ? "transparent" : "white"};
+    transition: all 400ms ease-in-out;
+    :before, :after{
+        content: '';
+        width: 25px;
+        height: 1px;
+        position: absolute;
+        background-color: white;
+    }
+    :before{
+        transition: all 400ms ease-in-out;
+        transform: ${props => props.bar ? "rotate(-45deg)" : "translateY(8px)"};
+    }
+    :after{
+        transition: all 400ms ease-in-out;
+        transform: ${props => props.bar ? "rotate(45deg)" : "translateY(-8px)"};
     }
 `

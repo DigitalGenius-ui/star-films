@@ -2,12 +2,15 @@ import React from 'react'
 import styled from 'styled-components';
 
 const Banner = () => {
+  const scroll = () => {
+    return window.scroll(0,500);
+  }
   return (
     <Container>
         <h1>Welcome To Star <span>Movie</span></h1>
         <p>Lookup which shows are available on <span>Netflix, Prime, Disney, 
         HBO, Hulu</span> and many other services across 60 countries</p>
-        <button>Get Started</button>
+        <button onClick={scroll}>Get Started</button>
     </Container>
   )
 }

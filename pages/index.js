@@ -56,8 +56,7 @@ const Cart = styled.div`
   } 
 `
 export const getStaticProps = async () => {
-  const key = process.env.TMDB_API_KEY;
-  const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
+  const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=74206488d4fb5a679b81bb45afcb8173`);
   const data = await res.json();
   const movies = data.results
   return{

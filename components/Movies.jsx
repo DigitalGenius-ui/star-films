@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const Movies = ({movie}) => {
   return (
     // eslint-disable-next-line @next/next/link-passhref
-    <Link href="/movie/[id]" as={`/movie/${movie.id}`}>
+    // <Link href="/movie/[id]" as={`/movie/${movie.id}`}>
       <Container>
         <Cart>
           <Img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}/>
@@ -15,7 +15,7 @@ const Movies = ({movie}) => {
           <p className='star'><span>⭐</span>{movie.vote_average}</p>
         </Cart>
     </Container>
-    </Link>
+    // </Link>
   )
 }
 

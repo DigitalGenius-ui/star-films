@@ -57,14 +57,12 @@ const Cart = styled.div`
 `
 export const getStaticProps = async () => {
   const key = process.env.TMDB_API_KEY;
-  // const res = await axios
-  // .get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
-  // const movies = res.data.results;
   const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
-  const movies = await res.json();
+  const data = await res.json();
+  const movies = data.results
   return{
     props : {
-      movies : movies.results
+      movies
     }
   }
 }

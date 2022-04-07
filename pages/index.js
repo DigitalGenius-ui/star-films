@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 export default function Home({movies}) {
   const [search, setSearch] = useState("");
+  console.log(movies)
   return (
       <>
         <Container>
@@ -22,12 +23,12 @@ export default function Home({movies}) {
             <>
               <Banner/>
               <h1 className='title'>Movie Lists :</h1>
-              {/* <Cart>
+              <Cart>
                 {movies.filter((item) => item.title.toLowerCase().includes(search))
                 .map((movie, i) => (
                   <Movies movie={movie} key={i}/>
                 ))}
-              </Cart> */}
+              </Cart>
             </>
         </Container>
       </>
@@ -43,25 +44,27 @@ const Container = styled.div`
         } 
     }
 `
-// const Cart = styled.div`
-//   width: 85%;
-//   margin: 0 auto;
-//   display: grid;
-//   gap: 1rem;
-//   grid-template-columns: repeat(auto-fit , minmax(180px, 1fr));
-//   margin-bottom: 2rem;
-//   @media(max-width : 900px){
-//     width: 90%;
-//   } 
-// `
-// export const getStaticProps = async () => {
-//   const key = process.env.TMDB_API_KEY;
-//   const res = await axios
-//   .get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
-//   const movies = res.data.results;
-//   return{
-//     props : {
-//       movies
-//     }
-//   }
-// }
+const Cart = styled.div`
+  width: 85%;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit , minmax(180px, 1fr));
+  margin-bottom: 2rem;
+  @media(max-width : 900px){
+    width: 90%;
+  } 
+`
+export const getStaticProps = async () => {
+  const key = process.env.TMDB_API_KEY;
+  // const res = await axios
+  // .get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
+  // const movies = res.data.results;
+  const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${key}`);
+  const movies = await res.json();
+  return{
+    props : {
+      movies : movies.results
+    }
+  }
+}
